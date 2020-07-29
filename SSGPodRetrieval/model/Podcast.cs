@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SSG_Pod_Retrieval.model
+namespace SSGPodRetrieval.model
 {
-    class Podcast
+    public class Podcast
     {
         public int id { get; set; }
         public string shortName { get; set; }
@@ -26,9 +26,9 @@ namespace SSG_Pod_Retrieval.model
         public string hosts { get; set; }
         public string url { get; set; }
         public string corbinRating {get; set;}
-        public string corbinRecommend { get; set; }
+        public bool corbinRecommend { get; set; }
         public string allenRating { get; set; }
-        public string allenRecommend { get; set; }
+        public bool allenRecommend { get; set; }
 
         public override string ToString()
         {

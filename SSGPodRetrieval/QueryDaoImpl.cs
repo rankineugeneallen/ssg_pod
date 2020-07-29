@@ -1,9 +1,11 @@
-﻿using SSG_Pod_Retrieval.model;
-using SSGPodRetrieval.model;
+﻿using SSGPodRetrieval.model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +31,9 @@ namespace SSGPodRetrieval
             conn.Close();
         }
 
-        //public List<PodType> loadPodTypes()
-        public ArrayList loadPodTypes()
+
+        
+        public ArrayList getAllPodTypes()
         {
             string query = "SELECT * from Podcast_Type;";
             ArrayList podTypes = new ArrayList();
@@ -57,7 +60,7 @@ namespace SSGPodRetrieval
         }
 
 
-        public ArrayList loadRetroTypes()
+        public ArrayList getAllRetroTypes()
         {
             string query = "SELECT * from Retrospective_Type;";
             ArrayList retroTypes = new ArrayList();
@@ -82,10 +85,10 @@ namespace SSGPodRetrieval
             return retroTypes;
         }
 
-        public List<Podcast> getAllPodcasts()
+        public ArrayList getAllPodcasts()
         {
             string query = "SELECT * FROM Podcast;";
-            List<Podcast> podcasts = new List<Podcast>();
+            ArrayList podcasts = new ArrayList();
             Podcast pod;
             string year;
 
@@ -99,20 +102,27 @@ namespace SSGPodRetrieval
 
                 pod.id = int.Parse(reader[0].ToString());
                 pod.shortName = reader[1].ToString();
-                pod.prodCode= reader[2].ToString();
+                pod.prodCode = reader[2].ToString();
                 pod.title = reader[3].ToString();
                 pod.typeId = int.Parse(reader[5].ToString());
                 pod.retroId = int.Parse(reader[8].ToString());
                 pod.runtime = reader[6].ToString();
-                pod.editor= reader[9].ToString();
-                pod.hosts= reader[10].ToString();
+                pod.editor = reader[9].ToString();
+                pod.hosts = reader[10].ToString();
                 pod.url = reader[11].ToString();
-                pod.corbinRating = reader[11].ToString();
-                pod.corbinRecommend= reader[12].ToString();
-                pod.allenRating= reader[12].ToString();
-                pod.allenRecommend= reader[13].ToString();
+                pod.corbinRating = reader[12].ToString();
+                //pod.corbinRecommend = reader[12].ToString();
+                pod.allenRating = reader[14].ToString();
+                //pod.allenRecommend = reader[13].ToString();
 
+                //set recommend
+                if (reader[13].ToString() == "True") pod.corbinRecommend = true;
+                else pod.corbinRecommend = false;
+                
+                if (reader[15].ToString() == "True") pod.allenRecommend= true;
+                else pod.allenRecommend= false;
 
+                
                 //set date
                 pod.dateRel = (reader[7].ToString());//DateTime.Parse(reader[7].ToString());
                 pod.dateRec = (reader[4].ToString());//DateTime.Parse(reader[4].ToString()); 
@@ -161,23 +171,6 @@ namespace SSGPodRetrieval
             conn.Close();
             return podcasts;
 
-        }
-
-
-        public void getTotalMLPods()
-        {
-            string query = "SELECT count(*) FROM Podcast WHERE TypeId = 1;";
-            conn.Open();
-            OleDbCommand command = new OleDbCommand(query, conn);            
-            OleDbDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                Console.WriteLine(reader.GetInt32(0));
-            }
-
-            conn.Close();
-            //reader.Close();
         }
 
         public ArrayList getAllRetros()
@@ -243,16 +236,52 @@ namespace SSGPodRetrieval
 
         }
 
+        public ArrayList getAllHosts()
+        {
+            string query = "SELECT * FROM HOST;";
+            ArrayList hosts = new ArrayList();
+            Host host;
+
+            conn.Open();
+            OleDbCommand command = new OleDbCommand(query, conn);
+            OleDbDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                host = new Host();
+
+                host.id = int.Parse(reader[0].ToString());
+                host.firstName = reader[1].ToString();
+                host.lastName = reader[2].ToString();
+
+                hosts.Add(host);
+            }
+
+            conn.Close();
+            return hosts;
+        }
+
+
+
+
+
+        /**
+          * UPDATE COMMANDS
+          */
+
         public int updatePod(Podcast pod)
         {
             string query = "UPDATE Podcast "+
                             "SET ShortName = @shortName,TypeId= @typeId,RetrospectiveId= @retroId,Runtime=@runtime,"+
-                                "DateRecorded=@dateRec,DateReleased=@dateRel,Editor=@editor,Hosts=@hosts,URL=@url "+
+                                "DateRecorded=@dateRec,DateReleased=@dateRel,Editor=@editor,Hosts=@hosts,URL=@url," +
+                                "CorbinRating=@corbinRate,CorbinRecommend=@corbinReco,AllenRating=@allenRate," +
+                                "AllenRecommend=@allenReco " +
                             "WHERE ID = @podId";
 
+            DateTime nullDate = new DateTime(2001, 1, 1);
+            int ret = 0;
             conn.Open();
             OleDbCommand command = new OleDbCommand(query, conn);
-            int ret = 0;
             
             command.Parameters.Add("@shortName", pod.shortName);
             command.Parameters.Add("@typeId", pod.typeId);
@@ -263,12 +292,16 @@ namespace SSGPodRetrieval
             command.Parameters.Add("@editor", pod.editor);
             command.Parameters.Add("@hosts", pod.hosts);
             command.Parameters.Add("@url", pod.url);
+            command.Parameters.Add("@corbinRate", pod.corbinRating);
+            command.Parameters.Add("@corbinReco", pod.corbinRecommend);
+            command.Parameters.Add("@allenRate", pod.allenRating);
+            command.Parameters.Add("@corbinReco", pod.allenRecommend);
             command.Parameters.Add("@podId", pod.id);
+
 
             try
             {
                 ret = command.ExecuteNonQuery();
-
             }
             catch (InvalidOperationException)
             {
@@ -310,5 +343,84 @@ namespace SSGPodRetrieval
             return ret;
         }
 
+
+
+
+
+
+
+        /**
+          * INSERT Commands
+          */
+        public int insertPodcast(Podcast pod)
+        {
+
+            string query = "INSERT INTO Podcast (ShortName, Title, TypeId, RetrospectiveId, Runtime, " +
+                                                "DateRecorded, DateReleased, Editor, Hosts, URL) " +
+                            "VALUES (ShortName= @shortName, Title=@title, TypeId=@typeId, RetrospectiveId=@retroId, Runtime=@runtime," +
+                                    "DateRecorded=@dateRec, DateReleased=@dateRel, Editor=@editor, Hosts=@hosts, URL=@url);";
+
+            conn.Open();
+            OleDbCommand command = new OleDbCommand(query, conn);
+            int ret = 0;
+
+            command.Parameters.Add("@shortName", pod.shortName);
+            command.Parameters.Add("@title", pod.title);
+            command.Parameters.Add("@typeId", pod.typeId);
+            command.Parameters.Add("@retroId", pod.retroId);
+            command.Parameters.Add("@runtime", pod.runtime);
+            command.Parameters.Add("@dateRec", pod.dateRecDate);
+            command.Parameters.Add("@dateRel", pod.dateRelDate);
+            command.Parameters.Add("@editor", pod.editor);
+            command.Parameters.Add("@hosts", pod.hosts);
+            command.Parameters.Add("@url", pod.url);
+
+
+
+            try
+            {
+                ret = command.ExecuteNonQuery();
+
+            }
+            catch (InvalidOperationException)
+            {
+                ret = -1;
+            }
+
+            conn.Close();
+
+            return ret;
+        }
+
+
+        public int insertHost(Host host)
+        {
+            string query = "INSERT INTO Host ([FirstName], [LastName]) " +
+                            "VALUES (@firstName, @lastName);";
+
+            conn.Open();
+            OleDbCommand command = new OleDbCommand(query, conn);
+            int ret = 0;
+
+            //command.CommandType = CommandType.Text;
+            //command.CommandText="INSERT INTO Host ([FirstName], [LastName]) VALUES (FirstName="
+            command.Parameters.Add("@firstName", host.firstName);
+            command.Parameters.Add("@lastName", host.lastName);
+
+
+            try
+            {
+                ret = command.ExecuteNonQuery();
+
+            }
+            catch (InvalidOperationException)
+            {
+                ret = -1;
+            }
+
+            conn.Close();
+
+            return ret;
+        }
     }
 }
