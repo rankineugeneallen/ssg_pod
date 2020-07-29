@@ -1,4 +1,5 @@
-﻿using SSG_Pod_Retrieval.model;
+﻿using SSGPodRetrieval.model;
+using SSGPodRetrieval.constant;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,14 +13,16 @@ using System.Windows.Forms;
 
 namespace SSGPodRetrieval
 {
-    public partial class RetroEditor : Form
+    public partial class RetroCreator : Form
     {
 
-        ArrayList retrospectives = new ArrayList();
-        public RetroEditor(ArrayList retrospectives)
+        //ArrayList retrospectives = new ArrayList();
+        TableData tableData = TableData.Instance;
+
+
+        public RetroCreator()
         {
             InitializeComponent();
-            this.retrospectives = retrospectives;
             loadRetrospectives();
         }
 
@@ -29,7 +32,7 @@ namespace SSGPodRetrieval
             Retrospective[] retroArr;
             retroListBox.Items.Clear();
 
-            retroArr = (Retrospective[])retrospectives.ToArray(typeof(Retrospective));
+            retroArr = (Retrospective[])tableData.getRetrospectives().ToArray(typeof(Retrospective));
 
             for (int i = 0; i < retroArr.Length; i++)
             {

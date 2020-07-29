@@ -1,10 +1,12 @@
-﻿using System;
+﻿using SSGPodRetrieval;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SSG_Pod_Retrieval.model
+namespace SSGPodRetrieval.model
 {
     class Retrospective
     {
@@ -13,6 +15,8 @@ namespace SSG_Pod_Retrieval.model
         public int typeId { get; set; }
         public string type { get; set; }
         public string code { get; set; }
+        public Average average { get; set; }
+        public List<Podcast> podcasts = new List<Podcast>();
 
         public override string ToString()
         {

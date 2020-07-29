@@ -61,6 +61,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,28 +73,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Average.cs" />
+    <Compile Include="constant\TableData.cs" />
+    <Compile Include="HostAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HostAdd.Designer.cs">
+      <DependentUpon>HostAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="InfoRetrieval.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InfoRetrieval.Designer.cs">
       <DependentUpon>InfoRetrieval.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\Host.cs" />
     <Compile Include="model\Podcast.cs" />
     <Compile Include="model\PodType.cs" />
     <Compile Include="model\RetroItem.cs" />
     <Compile Include="model\Retrospective.cs" />
     <Compile Include="model\RetroType.cs" />
+    <Compile Include="PodcastAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PodcastAdd.Designer.cs">
+      <DependentUpon>PodcastAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryDaoImpl.cs" />
-    <Compile Include="RetroEditor.cs">
+    <Compile Include="RetroCreator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RetroEditor.Designer.cs">
-      <DependentUpon>RetroEditor.cs</DependentUpon>
+    <Compile Include="RetroCreator.Designer.cs">
+      <DependentUpon>RetroCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="RetroQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RetroQuery.Designer.cs">
+      <DependentUpon>RetroQuery.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="HostAdd.resx">
+      <DependentUpon>HostAdd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InfoRetrieval.resx">
       <DependentUpon>InfoRetrieval.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PodcastAdd.resx">
+      <DependentUpon>PodcastAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -104,8 +132,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="RetroEditor.resx">
-      <DependentUpon>RetroEditor.cs</DependentUpon>
+    <EmbeddedResource Include="RetroCreator.resx">
+      <DependentUpon>RetroCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RetroQuery.resx">
+      <DependentUpon>RetroQuery.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
