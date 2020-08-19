@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSGPodRetrieval
 {
-    class Average
+    public class Average
     {
         public List<int> overallRatings { get; set; }
         public List<int> corbinsRatings { get; set; }

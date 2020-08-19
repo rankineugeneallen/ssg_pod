@@ -15,55 +15,76 @@ namespace SSGPodRetrieval
 {
     public partial class HostAdd : Form
     {
-        QueryDaoImpl query = new QueryDaoImpl();
         TableData tableData = TableData.Instance;
+        public Host host { get; private set; }
+        private Host editHost;
+
+        public Host GetHost()
+        {
+            return host;
+        }
 
         public HostAdd()
         {
             InitializeComponent();
         }
+        
+        public HostAdd(Host host)
+        {
+            InitializeComponent();
+
+            this.editHost = host;
+            loadHost();
+        }
+
+        private void loadHost()
+        {
+            hostFirstNameTB.Text = host.firstName;
+            hostLastNameTB.Text = host.lastName;
+        }
 
         private void hostAddBtn_Click(object sender, EventArgs e)
         {
-            Host host = new Host();
-
-            host.firstName = hostFirstNameTB.Text;
-            host.lastName = hostLastNameTB.Text;
-
-            if (!hostExists())
+            if(editHost == null)
             {
-                Console.WriteLine(query.insertHost(host));
-            }
-            else
-            {
-                string message = "Host Already Exists";
-                string caption = "";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-                DialogResult result;
+                Host host = new Host();
 
-                result = MessageBox.Show(message, caption, buttons);
-                if (result == System.Windows.Forms.DialogResult.Yes)
+                host.firstName = hostFirstNameTB.Text;
+                host.lastName = hostLastNameTB.Text;
+
+                if (tableData.addHost(host) != null)
                 {
+                    if(MessageBox.Show("Name: " + host.firstName + " " + host.lastName + "\nID: " + host.id, "Host added successfully!", 
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        this.Close();
+                    }
                     this.Close();
                 }
-            }
-        }
-
-        private bool hostExists()
-        {
-            ArrayList hosts = tableData.getHosts();
-
-            for (int i = 0; i < hosts.Count; i++)
-            {
-                if (((Host)hosts[i]).firstName == hostFirstNameTB.Text &&
-                    ((Host)hosts[i]).lastName == hostLastNameTB.Text)
+                else
                 {
-                    return true;
-                }
-            }
+                    MessageBox.Show("Error adding host", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            return false;
+                }
+
+            }
         }
+
+        //private bool hostExists()
+        //{
+        //    ArrayList hosts = tableData.getHosts();
+
+        //    for (int i = 0; i < hosts.Count; i++)
+        //    {
+        //        if (((Host)hosts[i]).firstName == hostFirstNameTB.Text &&
+        //            ((Host)hosts[i]).lastName == hostLastNameTB.Text)
+        //        {
+        //            return true;
+        //        }
+        //    }
+
+        //    return false;
+        //}
 
         private void hostCancelBtn_Click(object sender, EventArgs e)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSGPodRetrieval.model
 {
-    class Host
+    public class Host
     {
         public int id { get; set; }
         public string firstName { get; set; }
