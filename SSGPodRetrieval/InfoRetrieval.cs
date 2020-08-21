@@ -12,23 +12,40 @@ namespace SSGPodRetrieval
 {
     public partial class InfoRetrieval : Form
     {
-        QueryDaoImpl query;
-        TableData tableData = TableData.Instance;
+        TableData tableData = null; //TableData.Instance;
+        Podcast selPod;
+        Podcast origPod;
+        List<Rating> newRatings = new List<Rating>();
+        List<Rating> updRatings = new List<Rating>();
+        List<Rating> remRatings = new List<Rating>();
+        int tempId = 0;
 
         public InfoRetrieval()
         {
             InitializeComponent();
             
             dynLabelSS.Text = "Loading...";
-            
-            query = new QueryDaoImpl();
-            loadData();
-            
+
+            //loadData();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+           login();
+        }
+
+        private void login()
+        {
+            ConnectWin login = new ConnectWin();
+            if(login.ShowDialog() == DialogResult.OK)
+            {
+                tableData = TableData.Instance;
+                loadData();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void loadData()
@@ -120,97 +137,59 @@ namespace SSGPodRetrieval
             }
         }
 
-        private void writePodInfo(Podcast pod)
+        private void writePodInfo()
         {
             DateTime badDate = new DateTime(2001, 1, 1);
-            podShortNameTB.Text = pod.shortName;
-            podProdCodeTB.Text = pod.prodCode;
-            podRuntimeTB.Text = pod.runtime;
-            podEditorTB.Text = pod.editor;
-            podHostsTB.Text = pod.hosts;
-            podURLLLabel.Text = pod.url;
-            podURLTB.Text = pod.url;
-            
+            podShortNameTB.Text = origPod.shortName;
+            podProdCodeTB.Text = origPod.prodCode;
+            podRuntimeTB.Text = origPod.runtime;
+            podEditorTB.Text = origPod.editor;
+            podURLLLabel.Text = origPod.url;
+            podURLTB.Text = origPod.url;
+            podTrackTB.Text = origPod.track;
 
-            if (pod.dateRecDate != badDate)
+            if (origPod.dateRecDate != badDate)
             {
-                podDateRecDP.Value = pod.dateRecDate;
+                podDateRecDP.Value = origPod.dateRecDate;
                 podDateRecDP.Format = DateTimePickerFormat.Short;
             }
             else
                 podDateRecDP.Format = DateTimePickerFormat.Custom;
 
-            if (pod.dateRelDate != badDate)
+            if (origPod.dateRelDate != badDate)
             {
-                podDateRelDP.Value = pod.dateRelDate;
+                podDateRelDP.Value = origPod.dateRelDate;
                 podDateRelDP.Format = DateTimePickerFormat.Short;
             }
             else
                 podDateRelDP.Format = DateTimePickerFormat.Custom;
 
-            //write score/recommendation
-            if(!string.IsNullOrEmpty(pod.corbinRating.ToString()) ||
-                !string.IsNullOrEmpty(pod.allenRating.ToString())){
-                setHostRatings(pod);
-                setHostRecommends(pod);
-            }
-            else
-            {
-                podCorbinRateCB.SelectedIndex = 0;
-                podAllenRateCB.SelectedIndex = 0;
-                podCorbinRecoCB.SelectedIndex = 0;
-                podAllenRecoCB.SelectedIndex = 0;
-            }
-
             for (int i = 0; i < podTypeCB.Items.Count; i++)
             {
-                if (((PodType)podTypeCB.Items[i]).id == pod.typeId)
+                if (((PodType)podTypeCB.Items[i]).id == origPod.typeId)
                     podTypeCB.SelectedIndex = i;
             }
-        }
 
-        private void setHostRatings(Podcast pod)
-        {
-            for(int i = 0; i < podCorbinRateCB.Items.Count; i++)
+            for(int i = 0; i < origPod.ratings.Count; i++)
             {
-                if (podCorbinRateCB.Items[i].ToString() == pod.corbinRating.ToString())
-                {
-                    podCorbinRateCB.SelectedIndex = i;
-                    break;
-                }
-                else
-                    podCorbinRateCB.SelectedIndex = 0;
+                ((Rating)origPod.ratings[i]).tempId = getAndIncTempId();
             }
 
-            for (int i = 0; i < podAllenRateCB.Items.Count; i++)
-            {
-                if (podAllenRateCB.Items[i].ToString() == pod.allenRating.ToString())
-                {
-                    podAllenRateCB.SelectedIndex = i;
-                    break;
-                }
-                else
-                    podAllenRateCB.SelectedIndex = 0;
-            }
-        }
-
-        private void setHostRecommends(Podcast pod)
-        {
-            if(pod.corbinRecommend && !String.IsNullOrEmpty(pod.corbinRating))
-                podCorbinRecoCB.SelectedIndex = 1;
-            else if (!pod.corbinRecommend || !String.IsNullOrEmpty(pod.corbinRating))
-                podCorbinRecoCB.SelectedIndex = 2;
-            else
-                podCorbinRecoCB.SelectedIndex = 0;
-
-            if(pod.allenRecommend&& !String.IsNullOrEmpty(pod.allenRating))
-                podAllenRecoCB.SelectedIndex = 1;
-            else if (!pod.allenRecommend || !String.IsNullOrEmpty(pod.allenRating))
-                podAllenRecoCB.SelectedIndex = 2;
-            else
-                podAllenRecoCB.SelectedIndex = 0;
-
+            newRatings.Clear();
+            updRatings.Clear();
             
+            setHostRatings();
+            
+        }
+
+        private void setHostRatings()
+        {
+            podHostRatingsLB.Items.Clear();
+
+            foreach (Rating rating in selPod.ratings)
+            {
+                podHostRatingsLB.Items.Add(rating);
+            }
         }
 
         private ArrayList organizeRetroItems(List<Podcast> retroItems)
@@ -267,10 +246,18 @@ namespace SSGPodRetrieval
             return new ArrayList(sortedPodcastList);
         }
 
+        private void resetPodInfo()
+        {
+            selPod = origPod;
+            writePodInfo();
+        }
+
+
         private void toggleRetroInfoFields()
         {
             retroTitleTB.ReadOnly = !retroTitleTB.ReadOnly;
-            retroTypeCB.Enabled = !retroTypeCB.Enabled;
+            //retroTypeCB.Enabled = !retroTypeCB.Enabled;
+            retroTypeLockLabel.Enabled = !retroTypeLockLabel.Enabled;
             retroCodeTB.ReadOnly = !retroCodeTB.ReadOnly;
 
             retroEditDoneBtn.Enabled = !retroEditDoneBtn.Enabled;
@@ -278,34 +265,50 @@ namespace SSGPodRetrieval
             if (retroInfoEditBtn.Text == "Edit")
                 retroInfoEditBtn.Text = "Cancel";
             else
+            {
                 retroInfoEditBtn.Text = "Edit";
+                toggleRetroTypeToState(false);
+            }
         }
 
         private void togglePodInfoFields()
         {
             podShortNameTB.ReadOnly = !podShortNameTB.ReadOnly;
-            podTypeCB.Enabled = !podTypeCB.Enabled;
+            //podTypeCB.Enabled = !podTypeCB.Enabled;
+            podTypeLockLabel.Enabled = !podTypeLockLabel.Enabled;
             podRuntimeTB.ReadOnly = !podRuntimeTB.ReadOnly;
             podEditorTB.ReadOnly = !podEditorTB.ReadOnly;
-            podHostsTB.ReadOnly = !podHostsTB.ReadOnly;
             podDateRecDP.Enabled = !podDateRecDP.Enabled;
             podDateRelDP.Enabled = !podDateRelDP.Enabled;
             podDateRecClearLabel.Enabled = !podDateRecClearLabel.Enabled;
             podDateRelClearLabel.Enabled = !podDateRelClearLabel.Enabled;
-            podCorbinRateCB.Enabled = !podCorbinRateCB.Enabled;
-            podAllenRateCB.Enabled = !podAllenRateCB.Enabled;
-            podCorbinRecoCB.Enabled = !podCorbinRecoCB.Enabled;
-            podAllenRecoCB.Enabled = !podAllenRecoCB.Enabled;
+            podHostRatingsLB.Enabled = !podHostRatingsLB.Enabled;
+            podHostRateAddBtn.Enabled = !podHostRateAddBtn.Enabled;
             podURLTB.Visible = !podURLTB.Visible;
-
+            //podTrackTB.ReadOnly = !podTrackTB.ReadOnly;
             podURLLLabel.Text = podURLTB.Text;
 
+            if (!podEditDoneBtn.Enabled)
+            {
+                podHostRateEditBtn.Enabled = false;
+                podHostRateRemBtn.Enabled = false;
+                podHostRatingsLB.SelectedIndex = -1;
+            }
+
             podEditDoneBtn.Enabled = !podEditDoneBtn.Enabled;
+            //podEditDoneBtn.Enabled = !podEditDoneBtn.Enabled;
+
+            podResetLL.Enabled = !podResetLL.Enabled;
 
             if (podInfoEditBtn.Text == "Edit")
                 podInfoEditBtn.Text = "Cancel";
             else
+            {
                 podInfoEditBtn.Text = "Edit";
+                togglePodTypeToState(false);
+                writePodInfo();
+                //TODO - write origPod to these text boxes
+            }
         }
 
         private void checkDateValues()
@@ -320,6 +323,11 @@ namespace SSGPodRetrieval
                 podDateRelDP.Format = DateTimePickerFormat.Custom;
             else
                 podDateRelDP.Format = DateTimePickerFormat.Short;
+        }
+
+        private int getAndIncTempId()
+        {
+            return tempId++;
         }
 
         private void errorMessageBox(string message, string title)
@@ -358,18 +366,19 @@ namespace SSGPodRetrieval
 
         private void clearPodInfoTBs()
         {
+            selPod = null;
+            origPod = null;
             podShortNameTB.Clear();
             podProdCodeTB.Clear();
-            podTypeCB.Text = "";
+            podTypeCB.SelectedIndex = -1;
             podRuntimeTB.Clear();
             podEditorTB.Clear();
-            podHostsTB.Clear();
+            podTrackTB.Clear();
+            //podHostsTB.Clear();
+            podHostRatingsLB.Items.Clear();
             podDateRecDP.Format = DateTimePickerFormat.Custom;
             podDateRelDP.Format = DateTimePickerFormat.Custom;
-            podCorbinRateCB.SelectedIndex = 0;
-            podCorbinRecoCB.SelectedIndex = 0;
-            podAllenRateCB.SelectedIndex = 0;
-            podAllenRecoCB.SelectedIndex = 0;
+            podURLTB.Clear();
         }
 
 
@@ -383,18 +392,21 @@ namespace SSGPodRetrieval
             int i = retroComboBox.SelectedIndex;
             Retrospective selRetro = (Retrospective)retroComboBox.SelectedItem;
 
-
+            clearAveragesTBs();
+            clearPodInfoTBs();
             writeRetroInfo(selRetro);
             loadRetroItems(selRetro);
         }
 
         private void retroItemListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Podcast selPod = (Podcast)retroItemListBox.SelectedItem;
+            selPod = (Podcast)retroItemListBox.SelectedItem;
+            if (selPod != null) origPod = (Podcast)selPod.Clone();
+            else origPod = null;
 
             if ((Podcast)retroItemListBox.SelectedItem != null)
             {
-                writePodInfo(selPod);
+                writePodInfo();
                 podInfoEditBtn.Enabled = true;
             }
             else
@@ -493,6 +505,7 @@ namespace SSGPodRetrieval
             toggleRetroInfoFields();
         }
 
+        //TODO - fix updateRetro so it talks to tableData and not query.
         private void retroEditDoneBtn_Click(object sender, EventArgs e)
         {
             Retrospective retroUpdated;
@@ -503,13 +516,10 @@ namespace SSGPodRetrieval
                 retroUpdated.typeId = ((RetroType)retroTypeCB.SelectedItem).id;
                 retroUpdated.code = retroCodeTB.Text;
 
-                if (query.updateRetro(retroUpdated) > 0)
+                if (tableData.updateRetro(retroUpdated) > 0)
                 {
-                    loadRetrospectives();
-
                     toggleRetroInfoFields();
                 }
-
             }
         }
 
@@ -521,6 +531,7 @@ namespace SSGPodRetrieval
         private void podEditDoneBtn_Click(object sender, EventArgs e)
         {
             Podcast podUpdated;
+
             if (podEditDoneBtn.Enabled && retroItemListBox.SelectedItem != null)
             {
                 podUpdated = (Podcast)retroItemListBox.SelectedItem;
@@ -530,25 +541,57 @@ namespace SSGPodRetrieval
                 podUpdated.dateRecDate = podDateRecDP.Value;
                 podUpdated.dateRelDate = podDateRelDP.Value;
                 podUpdated.editor = podEditorTB.Text;
-                podUpdated.hosts = podHostsTB.Text;
-                podUpdated.corbinRating = (string)podCorbinRateCB.Items[podCorbinRateCB.SelectedIndex];
-                podUpdated.allenRating = (string)podAllenRateCB.Items[podAllenRateCB.SelectedIndex];
-                
-                if(podCorbinRecoCB.SelectedIndex == 1 ) podUpdated.corbinRecommend = true;
-                else podUpdated.corbinRecommend = false;
+                podUpdated.track = podTrackTB.Text;
 
-                if (podAllenRecoCB.SelectedIndex == 1) podUpdated.allenRecommend = true;
-                else podUpdated.allenRecommend = false;
-
-                if (tableData.updatePodcast(podUpdated) > 0)
+                if(podUpdated.typeId != origPod.typeId &&
+                    podUpdated.prodCode != origPod.prodCode)
                 {
-                    tableData.loadPodcasts();
+                    //update production code
+                    if (!(tableData.updatePodProdCodeAndTypeId(selPod) > 0))
+                    {
+                        errorMessageBox("Could not update type and/or production code", "Production Code Warning");
+                    }
+                }
+
+                Rating retRating = null;
+                foreach(Rating updAddRates in selPod.ratings)
+                {
+                    retRating = tableData.addOrUpdateRating(updAddRates);
+                    if (retRating == null)
+                    {
+                        errorMessageBox("Error adding rating for host " + updAddRates.host.firstName, "Rating Error");
+                        break;
+                    }
+                }
+
+
+
+                //add or update ratings
+                //foreach(Rating updRating in updRatings)
+                //{
+                //    //tableData.updateRating(updRating);
+                //    if (!(tableData.updateRating(updRating) > 0))
+                //    {
+                //        errorMessageBox("Could not update rating with for host: " + updRating.host.firstName, "Update Issue");
+                //        break;
+                //    }
+                //}
+
+                //foreach(Rating newRating in newRatings)
+                //{
+                //    //tableData.addRating(newRating);
+                //    if ((tableData.addRating(newRating) == null))
+                //    {
+                //        errorMessageBox("Could not add rating for host: " + newRating.host.firstName, "Update Issue");
+                //        break;
+                //    }
+                //}
+
+
+                if (tableData.updatePodcast(podUpdated) > 0 && retRating != null)
                     togglePodInfoFields();
-                }
                 else
-                {
                     errorMessageBox("Could not update title in Database", "DB Issue");
-                }
             }
         }
 
@@ -571,29 +614,33 @@ namespace SSGPodRetrieval
         private void retrospectiveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form retroEditor = new RetroCreator();
+            retroEditor.Top = this.Top + 20;
+            retroEditor.Left = this.Left + 20;
             retroEditor.Show();
         }
 
         private void podcastToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form podAdder = new PodcastAdd();
+            podAdder.Top = this.Top + 20;
+            podAdder.Left = this.Left + 20;
             podAdder.Show();
         }
 
-        private void podTypeCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void hostToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form hostAdd = new HostAdd();
+            hostAdd.Top = this.Top + 20;
+            hostAdd.Left = this.Left + 20;
             hostAdd.Show();
         }
 
         private void retrospectiveQueryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form retroQuery = new RetroQuery();
+            retroQuery.Top = this.Top + 20;
+            retroQuery.Left = this.Left + 20;
             retroQuery.Show();
         }
 
@@ -610,5 +657,279 @@ namespace SSGPodRetrieval
         }
 
         #endregion
+
+        private void podDateRelDP_ValueChanged(object sender, EventArgs e)
+        {
+            podDateRelDP.Format = DateTimePickerFormat.Short;
+        }
+
+        private void podDateRecDP_ValueChanged(object sender, EventArgs e)
+        {
+            podDateRecDP.Format = DateTimePickerFormat.Short;
+        }
+
+        private void ratingConvertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //tableData.shakeBaby();
+        }
+
+        private void podHostRatingsLB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (podHostRatingsLB.SelectedItem != null)
+            {
+                podHostRateRemBtn.Enabled = true;
+                podHostRateEditBtn.Enabled = true;
+            }
+            else
+            {
+                podHostRateRemBtn.Enabled = true;
+                podHostRateEditBtn.Enabled = true;
+            }
+        }
+
+        private void podHostRateAddBtn_Click(object sender, EventArgs e)
+        {
+            Rating rating = null;
+
+            using (HostAndScoreAdd hostAndScoreAdd = new HostAndScoreAdd(selPod.ratings.Cast<Rating>().ToList()))
+            {
+                if (hostAndScoreAdd.ShowDialog() == DialogResult.OK)
+                {
+                    rating = hostAndScoreAdd.GetRating();
+                    rating.tempId = getAndIncTempId();
+                    if (rating.podcastId == 0)
+                        rating.podcastId = selPod.id;
+                    selPod.ratings.Add(rating);
+                    setHostRatings();
+                }
+            }
+        }
+
+        private void podHostRateEditBtn_Click(object sender, EventArgs e)
+        {
+            if (podHostRatingsLB.SelectedItem != null)
+            {
+                Rating updRate = (Rating)podHostRatingsLB.SelectedItem;
+                bool updNewRate = false;
+
+                using (HostAndScoreAdd hostAndScoreAdd = new HostAndScoreAdd(updRate))
+                {
+                    if (hostAndScoreAdd.ShowDialog() == DialogResult.OK)
+                    {
+                        updRate = hostAndScoreAdd.GetRating();
+
+                        //once it comes back, update selPod
+                        for (int i = 0; i < selPod.ratings.Count; i++)
+                        {
+                            if (((Rating)selPod.ratings[i]).tempId == updRate.tempId)
+                            {
+                                selPod.ratings[i] = updRate;
+                            }
+                        }
+
+                        //for(int i = 0; i < newRatings.Count; i++) 
+                        //{
+                        //    if(((Rating)newRatings[i]).id == updRate.id)
+                        //    {
+                        //        newRatings[i] = updRate;
+                        //        updNewRate = true;
+                        //    }
+                        //}
+
+                        //if(!updNewRate)
+                        //    updRatings.Add(updRate);
+
+                        setHostRatings();
+                    }
+                }
+            }
+        }
+
+        private void podHostRateRemBtn_Click(object sender, EventArgs e)
+        {
+            if(podHostRatingsLB.SelectedIndex != null)
+            {
+                Rating remRating = (Rating)podHostRatingsLB.SelectedItem;
+                selPod.ratings.Remove(remRating);
+                podHostRatingsLB.Items.RemoveAt(podHostRatingsLB.SelectedIndex);
+                remRatings.Add(remRating);
+                setHostRatings();
+            }
+        }
+
+        private void podResetLL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            resetPodInfo();
+        }
+
+        private void retrospectiveTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form retroTypeMan = new RetroTypeManager();
+            retroTypeMan.Top = this.Top + 20;
+            retroTypeMan.Left = this.Left + 20;
+            retroTypeMan.Show();
+        }
+
+        private void podTypeLockLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!podTypeCB.Enabled)
+            {
+                if (MessageBox.Show("Any changes to podcast type will mean the production code will need to be updated. " +
+                    "This should only be done if absolutely necessary." +
+                    "\n\nAre you sure you want to continue?",
+                  "Production Code Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    MessageBox.Show("The production code will not be updated until the type field is locked. ", "Production Code Warning",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    togglePodTypeToState(true);
+
+
+                }
+            }
+            else
+            {
+                //if the type has changed then ask if they wanna continue with the prodcode update
+                if ((origPod.typeId != ((PodType)podTypeCB.SelectedItem).id) &&
+                    (MessageBox.Show("The podcast type was changed. Are you sure you want to continue? " +
+                    "\nThis will result in an update to the production code.",
+                  "Production Code Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                {
+                    ProdCodeManager prodCodeManager = new ProdCodeManager(selPod, (Retrospective)retroComboBox.SelectedItem);
+
+                    selPod.prodCode = prodCodeManager.assignNewPodType(selPod.prodCode, ((PodType)podTypeCB.SelectedItem).code);
+                    selPod.typeId = ((PodType)podTypeCB.SelectedItem).id;
+                    podProdCodeTB.Text = selPod.prodCode;
+
+                    //if(tableData.updatePodProdCodeAndTypeId(selPod) > 0)
+                    //{
+                    //MessageBox.Show("Original Production Code: " + origPod.prodCode +
+                    //    "\nNew Production Code: " + selPod.prodCode + "\tTypeID: " + selPod.typeId, 
+                    //    "Production Code Warning", 
+                    //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    //}
+
+
+                }
+                else
+                {
+                    //revert back to original type
+                    for(int i = 0; i < podTypeCB.Items.Count; i++)
+                    {
+                        if(((PodType)podTypeCB.Items[i]).id == origPod.typeId)
+                        {
+                            podTypeCB.SelectedIndex = i;
+                        }
+                    }
+                }
+
+                togglePodTypeToState(false);
+            }
+     
+        }
+
+
+
+        private void togglePodTypeToState(bool enable)
+        {
+            if (enable)
+            {
+                podTypeLockLabel.Text = "lock";
+                //update the pod type and production code 
+                podTypeCB.Enabled = true;
+            }
+            else
+            {
+                podTypeLockLabel.Text = "unlock";
+                podTypeCB.Enabled = false;
+            } 
+
+        }
+
+
+        private void toggleRetroTypeToState(bool enable)
+        {
+            if (enable)
+            {
+                retroTypeLockLabel.Text = "lock";
+                //update the pod type and production code 
+                retroTypeCB.Enabled = true;
+            }
+            else
+            {
+                retroTypeLockLabel.Text = "unlock";
+                retroTypeCB.Enabled = false;
+            }
+
+        }
+
+        //TODO - when the change is made to the retro type, then update all of the pods inside of retro 
+        private void retroTypeLockLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!retroTypeCB.Enabled)
+            {
+                if (MessageBox.Show("Any changes to the type will mean the production code for ALL podcasts assigned to this " +
+                    "retrospective will need to be updated. " +
+                    "\n\nThis should only be done if absolutely necessary." +
+                    "\n\nAre you sure you want to continue?",
+                  "Production Code Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    MessageBox.Show("The production codes will not be updated until the type field is locked. ", "Production Code Warning",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    toggleRetroTypeToState(true);
+
+
+                }
+            }
+            else
+            {
+                toggleRetroTypeToState(false);
+            }
+                //    //if the type has changed then ask if they wanna continue with the prodcode update
+                //    if ((origPod.typeId != ((PodType)podTypeCB.SelectedItem).id) &&
+                //        (MessageBox.Show("The podcast type was changed. Are you sure you want to continue? " +
+                //        "\nThis will result in an update to the production code.",
+                //      "Production Code Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                //    {
+                //        ProdCodeManager prodCodeManager = new ProdCodeManager(selPod, (Retrospective)retroComboBox.SelectedItem);
+
+                //        selPod.prodCode = prodCodeManager.assignNewPodType(selPod.prodCode, ((PodType)podTypeCB.SelectedItem).code);
+                //        selPod.typeId = ((PodType)podTypeCB.SelectedItem).id;
+                //        podProdCodeTB.Text = selPod.prodCode;
+
+                //        //if(tableData.updatePodProdCodeAndTypeId(selPod) > 0)
+                //        //{
+                //        //MessageBox.Show("Original Production Code: " + origPod.prodCode +
+                //        //    "\nNew Production Code: " + selPod.prodCode + "\tTypeID: " + selPod.typeId, 
+                //        //    "Production Code Warning", 
+                //        //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //        //}
+
+
+                //    }
+                //    else
+                //    {
+                //        //revert back to original type
+                //        for (int i = 0; i < podTypeCB.Items.Count; i++)
+                //        {
+                //            if (((PodType)podTypeCB.Items[i]).id == origPod.typeId)
+                //            {
+                //                podTypeCB.SelectedIndex = i;
+                //            }
+                //        }
+                //    }
+
+                //    togglePodTypeToState(false);
+                //}
+            }
+
+        private void loginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            login();
+        }
     }
+
 }

@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace SSGPodRetrieval.model
 {
-    class PodType
+    public class PodType
     {
+        public PodType() { }
+
+        public PodType(int id, string type, string code)
+        {
+            this.id = id;
+            this.type = type;
+            this.code = code;
+        }
+
         public int id { get; set; }
         public string type { get; set; }
         public string code { get; set; }

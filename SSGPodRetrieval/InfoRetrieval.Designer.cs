@@ -34,28 +34,23 @@
             this.retroComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.retroPodGrpBox = new System.Windows.Forms.GroupBox();
-            this.podAllenRecoCB = new System.Windows.Forms.ComboBox();
-            this.podCorbinRecoCB = new System.Windows.Forms.ComboBox();
-            this.podAllenRateCB = new System.Windows.Forms.ComboBox();
-            this.podCorbinRateCB = new System.Windows.Forms.ComboBox();
+            this.podResetLL = new System.Windows.Forms.LinkLabel();
+            this.podTrackTB = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.podHostRateEditBtn = new System.Windows.Forms.Button();
+            this.podHostRateRemBtn = new System.Windows.Forms.Button();
+            this.podHostRateAddBtn = new System.Windows.Forms.Button();
+            this.podHostRatingsLB = new System.Windows.Forms.ListBox();
             this.podURLTB = new System.Windows.Forms.TextBox();
             this.podDateRelClearLabel = new System.Windows.Forms.LinkLabel();
             this.podDateRecClearLabel = new System.Windows.Forms.LinkLabel();
             this.podDateRelDP = new System.Windows.Forms.DateTimePicker();
             this.podDateRecDP = new System.Windows.Forms.DateTimePicker();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.podTypeCB = new System.Windows.Forms.ComboBox();
             this.podEditDoneBtn = new System.Windows.Forms.Button();
             this.podInfoEditBtn = new System.Windows.Forms.Button();
-            this.podHostsTB = new System.Windows.Forms.TextBox();
             this.podEditorTB = new System.Windows.Forms.TextBox();
             this.podRuntimeTB = new System.Windows.Forms.TextBox();
-            this.podTypeTB = new System.Windows.Forms.TextBox();
             this.podProdCodeTB = new System.Windows.Forms.TextBox();
             this.podShortNameTB = new System.Windows.Forms.TextBox();
             this.podURLLLabel = new System.Windows.Forms.LinkLabel();
@@ -68,7 +63,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.podTypeLockLabel = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.retroTypeLockLabel = new System.Windows.Forms.LinkLabel();
             this.retroTypeCB = new System.Windows.Forms.ComboBox();
             this.retroEditDoneBtn = new System.Windows.Forms.Button();
             this.retroCodeTB = new System.Windows.Forms.TextBox();
@@ -94,16 +91,26 @@
             this.filterSortChkBx = new System.Windows.Forms.CheckBox();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.retrospectiveQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.retrospectiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.podcastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
+            this.retrospectiveTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.podcastTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hostsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.retrospectivesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removePodcastsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.retrospectiveQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ratingConvertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainSS = new System.Windows.Forms.StatusStrip();
             this.dynLabelSS = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.retroAllenAvgRecoTB = new System.Windows.Forms.TextBox();
             this.retroCorbinAvgRecoTB = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
@@ -114,6 +121,8 @@
             this.label22 = new System.Windows.Forms.Label();
             this.retroOverallAvgRateTB = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
+            this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.retroPodGrpBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.filterSortCMS.SuspendLayout();
@@ -140,7 +149,6 @@
             this.retroComboBox.Location = new System.Drawing.Point(15, 41);
             this.retroComboBox.Name = "retroComboBox";
             this.retroComboBox.Size = new System.Drawing.Size(282, 28);
-            this.retroComboBox.Sorted = true;
             this.retroComboBox.TabIndex = 5;
             this.retroComboBox.SelectedIndexChanged += new System.EventHandler(this.retroComboBox_SelectedIndexChanged);
             // 
@@ -155,28 +163,23 @@
             // 
             // retroPodGrpBox
             // 
-            this.retroPodGrpBox.Controls.Add(this.podAllenRecoCB);
-            this.retroPodGrpBox.Controls.Add(this.podCorbinRecoCB);
-            this.retroPodGrpBox.Controls.Add(this.podAllenRateCB);
-            this.retroPodGrpBox.Controls.Add(this.podCorbinRateCB);
+            this.retroPodGrpBox.Controls.Add(this.podResetLL);
+            this.retroPodGrpBox.Controls.Add(this.podTrackTB);
+            this.retroPodGrpBox.Controls.Add(this.label1);
+            this.retroPodGrpBox.Controls.Add(this.podHostRateEditBtn);
+            this.retroPodGrpBox.Controls.Add(this.podHostRateRemBtn);
+            this.retroPodGrpBox.Controls.Add(this.podHostRateAddBtn);
+            this.retroPodGrpBox.Controls.Add(this.podHostRatingsLB);
             this.retroPodGrpBox.Controls.Add(this.podURLTB);
             this.retroPodGrpBox.Controls.Add(this.podDateRelClearLabel);
             this.retroPodGrpBox.Controls.Add(this.podDateRecClearLabel);
             this.retroPodGrpBox.Controls.Add(this.podDateRelDP);
             this.retroPodGrpBox.Controls.Add(this.podDateRecDP);
-            this.retroPodGrpBox.Controls.Add(this.label18);
-            this.retroPodGrpBox.Controls.Add(this.label19);
-            this.retroPodGrpBox.Controls.Add(this.label20);
-            this.retroPodGrpBox.Controls.Add(this.label17);
-            this.retroPodGrpBox.Controls.Add(this.label2);
-            this.retroPodGrpBox.Controls.Add(this.label1);
             this.retroPodGrpBox.Controls.Add(this.podTypeCB);
             this.retroPodGrpBox.Controls.Add(this.podEditDoneBtn);
             this.retroPodGrpBox.Controls.Add(this.podInfoEditBtn);
-            this.retroPodGrpBox.Controls.Add(this.podHostsTB);
             this.retroPodGrpBox.Controls.Add(this.podEditorTB);
             this.retroPodGrpBox.Controls.Add(this.podRuntimeTB);
-            this.retroPodGrpBox.Controls.Add(this.podTypeTB);
             this.retroPodGrpBox.Controls.Add(this.podProdCodeTB);
             this.retroPodGrpBox.Controls.Add(this.podShortNameTB);
             this.retroPodGrpBox.Controls.Add(this.podURLLLabel);
@@ -189,94 +192,97 @@
             this.retroPodGrpBox.Controls.Add(this.label10);
             this.retroPodGrpBox.Controls.Add(this.label8);
             this.retroPodGrpBox.Controls.Add(this.label4);
+            this.retroPodGrpBox.Controls.Add(this.podTypeLockLabel);
             this.retroPodGrpBox.Location = new System.Drawing.Point(12, 325);
             this.retroPodGrpBox.Name = "retroPodGrpBox";
-            this.retroPodGrpBox.Size = new System.Drawing.Size(653, 380);
+            this.retroPodGrpBox.Size = new System.Drawing.Size(653, 243);
             this.retroPodGrpBox.TabIndex = 7;
             this.retroPodGrpBox.TabStop = false;
             this.retroPodGrpBox.Text = "Podcast Info";
             // 
-            // podAllenRecoCB
+            // podResetLL
             // 
-            this.podAllenRecoCB.Enabled = false;
-            this.podAllenRecoCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podAllenRecoCB.FormattingEnabled = true;
-            this.podAllenRecoCB.Items.AddRange(new object[] {
-            "",
-            "True",
-            "False"});
-            this.podAllenRecoCB.Location = new System.Drawing.Point(556, 156);
-            this.podAllenRecoCB.Name = "podAllenRecoCB";
-            this.podAllenRecoCB.Size = new System.Drawing.Size(62, 28);
-            this.podAllenRecoCB.TabIndex = 47;
+            this.podResetLL.AutoSize = true;
+            this.podResetLL.Enabled = false;
+            this.podResetLL.Location = new System.Drawing.Point(134, 193);
+            this.podResetLL.Name = "podResetLL";
+            this.podResetLL.Size = new System.Drawing.Size(30, 13);
+            this.podResetLL.TabIndex = 54;
+            this.podResetLL.TabStop = true;
+            this.podResetLL.Text = "reset";
+            this.podResetLL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.podResetLL_LinkClicked);
             // 
-            // podCorbinRecoCB
+            // podTrackTB
             // 
-            this.podCorbinRecoCB.Enabled = false;
-            this.podCorbinRecoCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podCorbinRecoCB.FormattingEnabled = true;
-            this.podCorbinRecoCB.Items.AddRange(new object[] {
-            "",
-            "True",
-            "False"});
-            this.podCorbinRecoCB.Location = new System.Drawing.Point(427, 156);
-            this.podCorbinRecoCB.Name = "podCorbinRecoCB";
-            this.podCorbinRecoCB.Size = new System.Drawing.Size(62, 28);
-            this.podCorbinRecoCB.TabIndex = 46;
+            this.podTrackTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.podTrackTB.Location = new System.Drawing.Point(405, 92);
+            this.podTrackTB.Name = "podTrackTB";
+            this.podTrackTB.ReadOnly = true;
+            this.podTrackTB.Size = new System.Drawing.Size(32, 26);
+            this.podTrackTB.TabIndex = 53;
             // 
-            // podAllenRateCB
+            // label1
             // 
-            this.podAllenRateCB.Enabled = false;
-            this.podAllenRateCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podAllenRateCB.FormattingEnabled = true;
-            this.podAllenRateCB.Items.AddRange(new object[] {
-            "",
-            "-",
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11"});
-            this.podAllenRateCB.Location = new System.Drawing.Point(508, 157);
-            this.podAllenRateCB.Name = "podAllenRateCB";
-            this.podAllenRateCB.Size = new System.Drawing.Size(42, 28);
-            this.podAllenRateCB.TabIndex = 45;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(402, 76);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 52;
+            this.label1.Text = "Track";
             // 
-            // podCorbinRateCB
+            // podHostRateEditBtn
             // 
-            this.podCorbinRateCB.Enabled = false;
-            this.podCorbinRateCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podCorbinRateCB.FormattingEnabled = true;
-            this.podCorbinRateCB.Items.AddRange(new object[] {
-            "",
-            "-",
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11"});
-            this.podCorbinRateCB.Location = new System.Drawing.Point(377, 157);
-            this.podCorbinRateCB.Name = "podCorbinRateCB";
-            this.podCorbinRateCB.Size = new System.Drawing.Size(42, 28);
-            this.podCorbinRateCB.TabIndex = 44;
+            this.podHostRateEditBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.podHostRateEditBtn.Enabled = false;
+            this.podHostRateEditBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.podHostRateEditBtn.Location = new System.Drawing.Point(566, 162);
+            this.podHostRateEditBtn.Name = "podHostRateEditBtn";
+            this.podHostRateEditBtn.Size = new System.Drawing.Size(52, 23);
+            this.podHostRateEditBtn.TabIndex = 51;
+            this.podHostRateEditBtn.Text = "Edit";
+            this.podHostRateEditBtn.UseVisualStyleBackColor = false;
+            this.podHostRateEditBtn.Click += new System.EventHandler(this.podHostRateEditBtn_Click);
+            // 
+            // podHostRateRemBtn
+            // 
+            this.podHostRateRemBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.podHostRateRemBtn.Enabled = false;
+            this.podHostRateRemBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.podHostRateRemBtn.Location = new System.Drawing.Point(621, 162);
+            this.podHostRateRemBtn.Name = "podHostRateRemBtn";
+            this.podHostRateRemBtn.Size = new System.Drawing.Size(22, 23);
+            this.podHostRateRemBtn.TabIndex = 50;
+            this.podHostRateRemBtn.Text = "-";
+            this.podHostRateRemBtn.UseVisualStyleBackColor = false;
+            this.podHostRateRemBtn.Click += new System.EventHandler(this.podHostRateRemBtn_Click);
+            // 
+            // podHostRateAddBtn
+            // 
+            this.podHostRateAddBtn.Enabled = false;
+            this.podHostRateAddBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.podHostRateAddBtn.Location = new System.Drawing.Point(443, 164);
+            this.podHostRateAddBtn.Name = "podHostRateAddBtn";
+            this.podHostRateAddBtn.Size = new System.Drawing.Size(72, 21);
+            this.podHostRateAddBtn.TabIndex = 49;
+            this.podHostRateAddBtn.Text = "Add Host";
+            this.podHostRateAddBtn.UseVisualStyleBackColor = true;
+            this.podHostRateAddBtn.Click += new System.EventHandler(this.podHostRateAddBtn_Click);
+            // 
+            // podHostRatingsLB
+            // 
+            this.podHostRatingsLB.Enabled = false;
+            this.podHostRatingsLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.podHostRatingsLB.FormattingEnabled = true;
+            this.podHostRatingsLB.ItemHeight = 20;
+            this.podHostRatingsLB.Location = new System.Drawing.Point(443, 92);
+            this.podHostRatingsLB.Name = "podHostRatingsLB";
+            this.podHostRatingsLB.Size = new System.Drawing.Size(200, 64);
+            this.podHostRatingsLB.TabIndex = 48;
+            this.podHostRatingsLB.SelectedIndexChanged += new System.EventHandler(this.podHostRatingsLB_SelectedIndexChanged);
             // 
             // podURLTB
             // 
-            this.podURLTB.Location = new System.Drawing.Point(10, 351);
+            this.podURLTB.Location = new System.Drawing.Point(168, 213);
             this.podURLTB.Name = "podURLTB";
             this.podURLTB.Size = new System.Drawing.Size(475, 20);
             this.podURLTB.TabIndex = 43;
@@ -287,7 +293,7 @@
             // 
             this.podDateRelClearLabel.AutoSize = true;
             this.podDateRelClearLabel.Enabled = false;
-            this.podDateRelClearLabel.Location = new System.Drawing.Point(267, 140);
+            this.podDateRelClearLabel.Location = new System.Drawing.Point(275, 141);
             this.podDateRelClearLabel.Name = "podDateRelClearLabel";
             this.podDateRelClearLabel.Size = new System.Drawing.Size(30, 13);
             this.podDateRelClearLabel.TabIndex = 42;
@@ -316,9 +322,10 @@
             this.podDateRelDP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.podDateRelDP.Location = new System.Drawing.Point(164, 157);
             this.podDateRelDP.Name = "podDateRelDP";
-            this.podDateRelDP.Size = new System.Drawing.Size(133, 26);
+            this.podDateRelDP.Size = new System.Drawing.Size(141, 26);
             this.podDateRelDP.TabIndex = 40;
             this.podDateRelDP.Value = new System.DateTime(2001, 1, 1, 0, 0, 0, 0);
+            this.podDateRelDP.ValueChanged += new System.EventHandler(this.podDateRelDP_ValueChanged);
             // 
             // podDateRecDP
             // 
@@ -332,62 +339,7 @@
             this.podDateRecDP.Size = new System.Drawing.Size(141, 26);
             this.podDateRecDP.TabIndex = 39;
             this.podDateRecDP.Value = new System.DateTime(2001, 1, 1, 0, 0, 0, 0);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(553, 140);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(67, 13);
-            this.label18.TabIndex = 36;
-            this.label18.Text = "Recommend";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(505, 141);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(38, 13);
-            this.label19.TabIndex = 35;
-            this.label19.Text = "Rating";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(505, 121);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(39, 18);
-            this.label20.TabIndex = 34;
-            this.label20.Text = "Allen";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(422, 140);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(67, 13);
-            this.label17.TabIndex = 33;
-            this.label17.Text = "Recommend";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(372, 141);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "Rating";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(372, 121);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 18);
-            this.label1.TabIndex = 29;
-            this.label1.Text = "Corbin";
+            this.podDateRecDP.ValueChanged += new System.EventHandler(this.podDateRecDP_ValueChanged);
             // 
             // podTypeCB
             // 
@@ -396,16 +348,16 @@
             this.podTypeCB.FormattingEnabled = true;
             this.podTypeCB.Location = new System.Drawing.Point(10, 92);
             this.podTypeCB.Name = "podTypeCB";
-            this.podTypeCB.Size = new System.Drawing.Size(187, 28);
+            this.podTypeCB.Size = new System.Drawing.Size(203, 28);
             this.podTypeCB.TabIndex = 28;
-            this.podTypeCB.SelectedIndexChanged += new System.EventHandler(this.podTypeCB_SelectedIndexChanged);
             // 
             // podEditDoneBtn
             // 
             this.podEditDoneBtn.Enabled = false;
-            this.podEditDoneBtn.Location = new System.Drawing.Point(488, 351);
+            this.podEditDoneBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.podEditDoneBtn.Location = new System.Drawing.Point(6, 208);
             this.podEditDoneBtn.Name = "podEditDoneBtn";
-            this.podEditDoneBtn.Size = new System.Drawing.Size(75, 23);
+            this.podEditDoneBtn.Size = new System.Drawing.Size(75, 27);
             this.podEditDoneBtn.TabIndex = 27;
             this.podEditDoneBtn.Text = "Done";
             this.podEditDoneBtn.UseVisualStyleBackColor = true;
@@ -414,49 +366,32 @@
             // podInfoEditBtn
             // 
             this.podInfoEditBtn.Enabled = false;
-            this.podInfoEditBtn.Location = new System.Drawing.Point(569, 351);
+            this.podInfoEditBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.podInfoEditBtn.Location = new System.Drawing.Point(87, 208);
             this.podInfoEditBtn.Name = "podInfoEditBtn";
-            this.podInfoEditBtn.Size = new System.Drawing.Size(75, 23);
+            this.podInfoEditBtn.Size = new System.Drawing.Size(75, 27);
             this.podInfoEditBtn.TabIndex = 26;
             this.podInfoEditBtn.Text = "Edit";
             this.podInfoEditBtn.UseVisualStyleBackColor = true;
             this.podInfoEditBtn.Click += new System.EventHandler(this.podEditBtn_Click);
             // 
-            // podHostsTB
-            // 
-            this.podHostsTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podHostsTB.Location = new System.Drawing.Point(443, 92);
-            this.podHostsTB.Name = "podHostsTB";
-            this.podHostsTB.ReadOnly = true;
-            this.podHostsTB.Size = new System.Drawing.Size(200, 26);
-            this.podHostsTB.TabIndex = 23;
-            // 
             // podEditorTB
             // 
             this.podEditorTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podEditorTB.Location = new System.Drawing.Point(342, 92);
+            this.podEditorTB.Location = new System.Drawing.Point(315, 91);
             this.podEditorTB.Name = "podEditorTB";
             this.podEditorTB.ReadOnly = true;
-            this.podEditorTB.Size = new System.Drawing.Size(95, 26);
+            this.podEditorTB.Size = new System.Drawing.Size(84, 26);
             this.podEditorTB.TabIndex = 22;
             // 
             // podRuntimeTB
             // 
             this.podRuntimeTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podRuntimeTB.Location = new System.Drawing.Point(203, 92);
+            this.podRuntimeTB.Location = new System.Drawing.Point(219, 91);
             this.podRuntimeTB.Name = "podRuntimeTB";
             this.podRuntimeTB.ReadOnly = true;
-            this.podRuntimeTB.Size = new System.Drawing.Size(133, 26);
+            this.podRuntimeTB.Size = new System.Drawing.Size(90, 26);
             this.podRuntimeTB.TabIndex = 21;
-            // 
-            // podTypeTB
-            // 
-            this.podTypeTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.podTypeTB.Location = new System.Drawing.Point(10, 92);
-            this.podTypeTB.Name = "podTypeTB";
-            this.podTypeTB.ReadOnly = true;
-            this.podTypeTB.Size = new System.Drawing.Size(187, 26);
-            this.podTypeTB.TabIndex = 20;
             // 
             // podProdCodeTB
             // 
@@ -481,7 +416,7 @@
             // podURLLLabel
             // 
             this.podURLLLabel.AutoEllipsis = true;
-            this.podURLLLabel.Location = new System.Drawing.Point(10, 353);
+            this.podURLLLabel.Location = new System.Drawing.Point(168, 216);
             this.podURLLLabel.Name = "podURLLLabel";
             this.podURLLLabel.Size = new System.Drawing.Size(477, 18);
             this.podURLLLabel.TabIndex = 17;
@@ -490,7 +425,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(8, 338);
+            this.label16.Location = new System.Drawing.Point(166, 199);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(75, 13);
             this.label16.TabIndex = 16;
@@ -501,14 +436,14 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(440, 76);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(34, 13);
+            this.label15.Size = new System.Drawing.Size(75, 13);
             this.label15.TabIndex = 14;
-            this.label15.Text = "Hosts";
+            this.label15.Text = "Hosts/Ratings";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(339, 76);
+            this.label14.Location = new System.Drawing.Point(312, 75);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(34, 13);
             this.label14.TabIndex = 12;
@@ -535,7 +470,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(200, 76);
+            this.label11.Location = new System.Drawing.Point(216, 75);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(93, 13);
             this.label11.TabIndex = 6;
@@ -568,8 +503,21 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Prod Code";
             // 
+            // podTypeLockLabel
+            // 
+            this.podTypeLockLabel.Enabled = false;
+            this.podTypeLockLabel.Location = new System.Drawing.Point(174, 77);
+            this.podTypeLockLabel.Name = "podTypeLockLabel";
+            this.podTypeLockLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.podTypeLockLabel.Size = new System.Drawing.Size(42, 19);
+            this.podTypeLockLabel.TabIndex = 55;
+            this.podTypeLockLabel.TabStop = true;
+            this.podTypeLockLabel.Text = "unlock";
+            this.podTypeLockLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.podTypeLockLabel_LinkClicked);
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.retroTypeLockLabel);
             this.groupBox1.Controls.Add(this.retroTypeCB);
             this.groupBox1.Controls.Add(this.retroEditDoneBtn);
             this.groupBox1.Controls.Add(this.retroCodeTB);
@@ -586,6 +534,18 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Retrospective Info";
+            // 
+            // retroTypeLockLabel
+            // 
+            this.retroTypeLockLabel.Enabled = false;
+            this.retroTypeLockLabel.Location = new System.Drawing.Point(159, 65);
+            this.retroTypeLockLabel.Name = "retroTypeLockLabel";
+            this.retroTypeLockLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.retroTypeLockLabel.Size = new System.Drawing.Size(40, 15);
+            this.retroTypeLockLabel.TabIndex = 15;
+            this.retroTypeLockLabel.TabStop = true;
+            this.retroTypeLockLabel.Text = "unlock";
+            this.retroTypeLockLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.retroTypeLockLabel_LinkClicked);
             // 
             // retroTypeCB
             // 
@@ -784,7 +744,8 @@
             this.filterSortChkBx.Size = new System.Drawing.Size(92, 28);
             this.filterSortChkBx.TabIndex = 10;
             this.filterSortChkBx.Text = "Filter/Sort - OFF";
-            this.filterSortBtnTT.SetToolTip(this.filterSortChkBx, "Right-click for Filter/Sort options");
+            this.filterSortBtnTT.SetToolTip(this.filterSortChkBx, "Right-click for Filter/Sort options\r\nApplies to the Retrospective Item List Box (" +
+        "below)");
             this.filterSortChkBx.UseVisualStyleBackColor = true;
             this.filterSortChkBx.CheckedChanged += new System.EventHandler(this.filterSortChkBx_CheckedChanged);
             // 
@@ -801,20 +762,17 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.retrospectiveQueryToolStripMenuItem,
+            this.loginToolStripMenuItem,
+            this.toolStripSeparator3,
             this.newToolStripMenuItem,
+            this.manageToolStripMenuItem,
+            this.retrospectiveQueryToolStripMenuItem,
             this.toolStripSeparator2,
-            this.refreshToolStripMenuItem});
+            this.refreshToolStripMenuItem,
+            this.ratingConvertToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // retrospectiveQueryToolStripMenuItem
-            // 
-            this.retrospectiveQueryToolStripMenuItem.Name = "retrospectiveQueryToolStripMenuItem";
-            this.retrospectiveQueryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.retrospectiveQueryToolStripMenuItem.Text = "Retrospective Query";
-            this.retrospectiveQueryToolStripMenuItem.Click += new System.EventHandler(this.retrospectiveQueryToolStripMenuItem_Click);
             // 
             // newToolStripMenuItem
             // 
@@ -847,10 +805,82 @@
             this.hostToolStripMenuItem.Text = "Host";
             this.hostToolStripMenuItem.Click += new System.EventHandler(this.hostToolStripMenuItem_Click);
             // 
+            // manageToolStripMenuItem
+            // 
+            this.manageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox3,
+            this.retrospectiveTypesToolStripMenuItem,
+            this.podcastTypesToolStripMenuItem,
+            this.hostsToolStripMenuItem,
+            this.retrospectivesToolStripMenuItem,
+            this.editorsToolStripMenuItem,
+            this.removePodcastsToolStripMenuItem});
+            this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+            this.manageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageToolStripMenuItem.Text = "Manage";
+            // 
+            // toolStripTextBox3
+            // 
+            this.toolStripTextBox3.Enabled = false;
+            this.toolStripTextBox3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripTextBox3.Name = "toolStripTextBox3";
+            this.toolStripTextBox3.ReadOnly = true;
+            this.toolStripTextBox3.Size = new System.Drawing.Size(100, 23);
+            this.toolStripTextBox3.Text = "Types";
+            // 
+            // retrospectiveTypesToolStripMenuItem
+            // 
+            this.retrospectiveTypesToolStripMenuItem.Name = "retrospectiveTypesToolStripMenuItem";
+            this.retrospectiveTypesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.retrospectiveTypesToolStripMenuItem.Text = "Retrospective Types";
+            this.retrospectiveTypesToolStripMenuItem.Click += new System.EventHandler(this.retrospectiveTypesToolStripMenuItem_Click);
+            // 
+            // podcastTypesToolStripMenuItem
+            // 
+            this.podcastTypesToolStripMenuItem.Enabled = false;
+            this.podcastTypesToolStripMenuItem.Name = "podcastTypesToolStripMenuItem";
+            this.podcastTypesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.podcastTypesToolStripMenuItem.Text = "Podcast Types";
+            // 
+            // hostsToolStripMenuItem
+            // 
+            this.hostsToolStripMenuItem.Enabled = false;
+            this.hostsToolStripMenuItem.Name = "hostsToolStripMenuItem";
+            this.hostsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.hostsToolStripMenuItem.Text = "Hosts";
+            // 
+            // retrospectivesToolStripMenuItem
+            // 
+            this.retrospectivesToolStripMenuItem.Enabled = false;
+            this.retrospectivesToolStripMenuItem.Name = "retrospectivesToolStripMenuItem";
+            this.retrospectivesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.retrospectivesToolStripMenuItem.Text = "Retrospectives";
+            // 
+            // editorsToolStripMenuItem
+            // 
+            this.editorsToolStripMenuItem.Enabled = false;
+            this.editorsToolStripMenuItem.Name = "editorsToolStripMenuItem";
+            this.editorsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.editorsToolStripMenuItem.Text = "Editors";
+            // 
+            // removePodcastsToolStripMenuItem
+            // 
+            this.removePodcastsToolStripMenuItem.Enabled = false;
+            this.removePodcastsToolStripMenuItem.Name = "removePodcastsToolStripMenuItem";
+            this.removePodcastsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.removePodcastsToolStripMenuItem.Text = "Remove Podcast";
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // retrospectiveQueryToolStripMenuItem
+            // 
+            this.retrospectiveQueryToolStripMenuItem.Name = "retrospectiveQueryToolStripMenuItem";
+            this.retrospectiveQueryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.retrospectiveQueryToolStripMenuItem.Text = "Retrospective Query";
+            this.retrospectiveQueryToolStripMenuItem.Click += new System.EventHandler(this.retrospectiveQueryToolStripMenuItem_Click);
             // 
             // refreshToolStripMenuItem
             // 
@@ -859,11 +889,19 @@
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
+            // ratingConvertToolStripMenuItem
+            // 
+            this.ratingConvertToolStripMenuItem.Enabled = false;
+            this.ratingConvertToolStripMenuItem.Name = "ratingConvertToolStripMenuItem";
+            this.ratingConvertToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ratingConvertToolStripMenuItem.Text = "shake baby";
+            this.ratingConvertToolStripMenuItem.Click += new System.EventHandler(this.ratingConvertToolStripMenuItem_Click);
+            // 
             // mainSS
             // 
             this.mainSS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dynLabelSS});
-            this.mainSS.Location = new System.Drawing.Point(0, 708);
+            this.mainSS.Location = new System.Drawing.Point(0, 576);
             this.mainSS.Name = "mainSS";
             this.mainSS.Size = new System.Drawing.Size(680, 22);
             this.mainSS.TabIndex = 12;
@@ -876,6 +914,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.retroAllenAvgRecoTB);
             this.groupBox2.Controls.Add(this.retroCorbinAvgRecoTB);
             this.groupBox2.Controls.Add(this.label25);
@@ -893,30 +932,40 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Retro Averages";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(92, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 16);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Overall";
+            // 
             // retroAllenAvgRecoTB
             // 
             this.retroAllenAvgRecoTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.retroAllenAvgRecoTB.Location = new System.Drawing.Point(146, 126);
+            this.retroAllenAvgRecoTB.Location = new System.Drawing.Point(176, 126);
             this.retroAllenAvgRecoTB.MaxLength = 10;
             this.retroAllenAvgRecoTB.Name = "retroAllenAvgRecoTB";
             this.retroAllenAvgRecoTB.ReadOnly = true;
-            this.retroAllenAvgRecoTB.Size = new System.Drawing.Size(107, 26);
+            this.retroAllenAvgRecoTB.Size = new System.Drawing.Size(77, 26);
             this.retroAllenAvgRecoTB.TabIndex = 10;
             // 
             // retroCorbinAvgRecoTB
             // 
             this.retroCorbinAvgRecoTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.retroCorbinAvgRecoTB.Location = new System.Drawing.Point(146, 80);
+            this.retroCorbinAvgRecoTB.Location = new System.Drawing.Point(176, 80);
             this.retroCorbinAvgRecoTB.Name = "retroCorbinAvgRecoTB";
             this.retroCorbinAvgRecoTB.ReadOnly = true;
-            this.retroCorbinAvgRecoTB.Size = new System.Drawing.Size(107, 26);
+            this.retroCorbinAvgRecoTB.Size = new System.Drawing.Size(77, 26);
             this.retroCorbinAvgRecoTB.TabIndex = 9;
             // 
             // label25
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(98, 131);
+            this.label25.Location = new System.Drawing.Point(102, 132);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(38, 16);
             this.label25.TabIndex = 8;
@@ -929,7 +978,7 @@
             this.retroAllenAvgRateTB.MaxLength = 10;
             this.retroAllenAvgRateTB.Name = "retroAllenAvgRateTB";
             this.retroAllenAvgRateTB.ReadOnly = true;
-            this.retroAllenAvgRateTB.Size = new System.Drawing.Size(74, 26);
+            this.retroAllenAvgRateTB.Size = new System.Drawing.Size(56, 26);
             this.retroAllenAvgRateTB.TabIndex = 7;
             // 
             // retroCorbinAvgRateTB
@@ -939,14 +988,14 @@
             this.retroCorbinAvgRateTB.MaxLength = 10;
             this.retroCorbinAvgRateTB.Name = "retroCorbinAvgRateTB";
             this.retroCorbinAvgRateTB.ReadOnly = true;
-            this.retroCorbinAvgRateTB.Size = new System.Drawing.Size(73, 26);
+            this.retroCorbinAvgRateTB.Size = new System.Drawing.Size(56, 26);
             this.retroCorbinAvgRateTB.TabIndex = 5;
             // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(91, 85);
+            this.label23.Location = new System.Drawing.Point(96, 86);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(47, 16);
             this.label23.TabIndex = 4;
@@ -955,22 +1004,22 @@
             // retroOverallRecoTB
             // 
             this.retroOverallRecoTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.retroOverallRecoTB.Location = new System.Drawing.Point(146, 35);
+            this.retroOverallRecoTB.Location = new System.Drawing.Point(176, 35);
             this.retroOverallRecoTB.MaxLength = 10;
             this.retroOverallRecoTB.Name = "retroOverallRecoTB";
             this.retroOverallRecoTB.ReadOnly = true;
-            this.retroOverallRecoTB.Size = new System.Drawing.Size(107, 26);
+            this.retroOverallRecoTB.Size = new System.Drawing.Size(77, 26);
             this.retroOverallRecoTB.TabIndex = 3;
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(116, 16);
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(139, 17);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(147, 16);
+            this.label22.Size = new System.Drawing.Size(118, 15);
             this.label22.TabIndex = 2;
-            this.label22.Text = "Overall Recommend %";
+            this.label22.Text = "Avg. Recommend %";
             // 
             // retroOverallAvgRateTB
             // 
@@ -979,25 +1028,37 @@
             this.retroOverallAvgRateTB.MaxLength = 10;
             this.retroOverallAvgRateTB.Name = "retroOverallAvgRateTB";
             this.retroOverallAvgRateTB.ReadOnly = true;
-            this.retroOverallAvgRateTB.Size = new System.Drawing.Size(74, 26);
+            this.retroOverallAvgRateTB.Size = new System.Drawing.Size(56, 26);
             this.retroOverallAvgRateTB.TabIndex = 1;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(6, 16);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(93, 16);
+            this.label21.Size = new System.Drawing.Size(68, 15);
             this.label21.TabIndex = 0;
-            this.label21.Text = "Overall Rating";
+            this.label21.Text = "Avg. Rating";
+            // 
+            // loginToolStripMenuItem
+            // 
+            this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loginToolStripMenuItem.Text = "Switch Login";
+            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // InfoRetrieval
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(680, 730);
+            this.ClientSize = new System.Drawing.Size(680, 598);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.mainSS);
             this.Controls.Add(this.mainMenuStrip);
@@ -1075,10 +1136,8 @@
         private System.Windows.Forms.Button retroEditDoneBtn;
         private System.Windows.Forms.TextBox podShortNameTB;
         private System.Windows.Forms.TextBox podProdCodeTB;
-        private System.Windows.Forms.TextBox podTypeTB;
         private System.Windows.Forms.TextBox podRuntimeTB;
         private System.Windows.Forms.TextBox podEditorTB;
-        private System.Windows.Forms.TextBox podHostsTB;
         private System.Windows.Forms.Button podEditDoneBtn;
         private System.Windows.Forms.Button podInfoEditBtn;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
@@ -1091,12 +1150,6 @@
         private System.Windows.Forms.ToolStripMenuItem hostToolStripMenuItem;
         private System.Windows.Forms.StatusStrip mainSS;
         private System.Windows.Forms.ToolStripStatusLabel dynLabelSS;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox retroOverallRecoTB;
         private System.Windows.Forms.Label label22;
@@ -1114,10 +1167,27 @@
         private System.Windows.Forms.LinkLabel podDateRelClearLabel;
         private System.Windows.Forms.LinkLabel podDateRecClearLabel;
         private System.Windows.Forms.TextBox podURLTB;
-        private System.Windows.Forms.ComboBox podCorbinRateCB;
-        private System.Windows.Forms.ComboBox podAllenRecoCB;
-        private System.Windows.Forms.ComboBox podCorbinRecoCB;
-        private System.Windows.Forms.ComboBox podAllenRateCB;
+        private System.Windows.Forms.ListBox podHostRatingsLB;
+        private System.Windows.Forms.ToolStripMenuItem ratingConvertToolStripMenuItem;
+        private System.Windows.Forms.Button podHostRateEditBtn;
+        private System.Windows.Forms.Button podHostRateRemBtn;
+        private System.Windows.Forms.Button podHostRateAddBtn;
+        private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hostsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem retrospectivesToolStripMenuItem;
+        private System.Windows.Forms.TextBox podTrackTB;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.LinkLabel podResetLL;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
+        private System.Windows.Forms.ToolStripMenuItem retrospectiveTypesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem podcastTypesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removePodcastsToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel podTypeLockLabel;
+        private System.Windows.Forms.LinkLabel retroTypeLockLabel;
+        private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

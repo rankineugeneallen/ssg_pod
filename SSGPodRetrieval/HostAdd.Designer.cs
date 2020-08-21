@@ -110,6 +110,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "HostAdd";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Add Host";
             this.ResumeLayout(false);
             this.PerformLayout();

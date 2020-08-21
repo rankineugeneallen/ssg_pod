@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace SSGPodRetrieval.model
 {
-    class Retrospective
+    public class Retrospective
     {
         public int id { get; set; }
         public string title { get; set; }
         public int typeId { get; set; }
         public string type { get; set; }
+        public RetroType retroType { get; set; }
         public string code { get; set; }
         public Average average { get; set; }
         public List<Podcast> podcasts = new List<Podcast>();
